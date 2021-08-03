@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import {Switch,BrowserRouter,Route,Link} from 'react-router-dom'
 
 import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
+import CheckoutComp from './components/Checkout/CheckoutComp';
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
@@ -17,6 +19,9 @@ function App() {
   };
 
   return (
+    <BrowserRouter>
+    <Switch>
+    <Route exact path="/">
     <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
@@ -24,6 +29,10 @@ function App() {
         <Meals />
       </main>
     </CartProvider>
+    </Route>
+    <Route path="/checkout" component={CheckoutComp}/>
+    </Switch>
+    </BrowserRouter>
   );
 }
 

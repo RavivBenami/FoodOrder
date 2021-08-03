@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useHistory } from 'react-router';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
@@ -7,6 +8,7 @@ import CartContext from '../../store/cart-context';
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
+  const history = useHistory()
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -34,6 +36,10 @@ const Cart = (props) => {
     </ul>
   );
 
+  const orderClicked = ()=>{
+    history.push('/checkout')
+  }
+
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
@@ -45,7 +51,7 @@ const Cart = (props) => {
         <button className={classes['button--alt']} onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        {hasItems && <button className={classes.button} onClick={orderClicked}>Order</button>}
       </div>
     </Modal>
   );
