@@ -11,8 +11,17 @@ const steps = ['Shipping address','Payment details']
 function CheckoutComp(props) {
     const classes = useStyles();
     const [activeStep,setActiveStep] = useState(0)
+    const [shippingData,setShippingData] = useState({})
 
-    const Form = ()=>activeStep === 0 ? <AddressForm/> : <PaymentForm/>
+
+    const nextStep = () => setActiveStep((prev)=>prev+1)
+    const backStep = () => setActiveStep((prev)=>prev-1)
+    const next = (data)=>{
+        setShippingData(data)
+        nextStep()
+    }
+    const Form = ()=>activeStep === 0 ? <AddressForm next={next}/> : <PaymentForm shippingData={shippingData} backStep={backStep} nextStep={nextStep}/>
+
     return (
         <>
           <div className={classes.toolbar}/>

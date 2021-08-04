@@ -20,18 +20,18 @@ function App() {
 
   return (
     <BrowserRouter>
+    <CartProvider>
     <Switch>
     <Route exact path="/">
-    <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
         <Meals />
       </main>
-    </CartProvider>
     </Route>
     <Route path="/checkout" component={CheckoutComp}/>
     </Switch>
+    </CartProvider>
     </BrowserRouter>
   );
 }

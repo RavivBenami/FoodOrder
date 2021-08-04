@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
-import classes from './Cart.module.css';
+import classes from '../Cart/Cart.module.css'
 import CartContext from '../../store/cart-context';
 
 const Cart = (props) => {
@@ -11,6 +11,9 @@ const Cart = (props) => {
   const history = useHistory()
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+  if(totalAmount.charAt(2) == '-'){
+    totalAmount = '$0.00'
+  }
   const hasItems = cartCtx.items.length > 0;
 
   const cartItemRemoveHandler = (id) => {
@@ -18,7 +21,13 @@ const Cart = (props) => {
   };
 
   const cartItemAddHandler = (item) => {
-    cartCtx.addItem(item);
+    const newItem = {
+      name:item.name,
+      amount:1,
+      id:item.id,
+      price:item.price
+    }
+    cartCtx.addItem(newItem);
   };
 
   const cartItems = (
